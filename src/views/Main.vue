@@ -19,15 +19,15 @@
         >
         </v-text-field>
         <List
-          v-for="(listItem, i) in todoList"
+          v-for="(listItem, i) in filteredTodos"
           :key="i"
           :list="listItem"
         ></List>
         <div class="todo-footer d-flex align-center justify-center pa-2">
           <p class="mr-4">{{ todoList.length }} item left</p>
-          <v-btn class="active" text>all</v-btn>
-          <v-btn text>active</v-btn>
-          <v-btn text>completed</v-btn>
+          <v-btn @click="filter = 'all'" text>all</v-btn>
+          <v-btn @click="filter = 'active'" text>active</v-btn>
+          <v-btn @click="filter = 'completed'" text>completed</v-btn>
         </div>
       </v-card>
     </div>
@@ -44,6 +44,16 @@ export default {
   },
   computed: {
     ...mapState(['todoList']),
+    filteredTodos() {
+      switch (this.filter) {
+        case 'active':
+          return this.todoList.filter((el) => !el.complete);
+        case 'completed':
+          return this.todoList.filter((el) => el.complete);
+        default:
+          return this.todoList;
+      }
+    },
     newId() {
       return (
         //리스트에서 가장 큰 값을 찾고, 그 값에 1을 더해준다.
@@ -56,6 +66,7 @@ export default {
   data() {
     return {
       newTitle: '',
+      filter: '',
     };
   },
   methods: {
@@ -65,6 +76,7 @@ export default {
         complete: false,
         title: this.newTitle,
       });
+      this.newTitle = '';
     },
   },
 };
