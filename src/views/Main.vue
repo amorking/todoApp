@@ -24,7 +24,7 @@
           :list="listItem"
         ></List>
         <div class="todo-footer d-flex align-center justify-center pa-2">
-          <p class="mr-4">{{ todoList.length }} item left</p>
+          <p class="mr-4">{{ filteredTodos.length }} item left</p>
           <v-btn @click="filter = 'all'" text>all</v-btn>
           <v-btn @click="filter = 'active'" text>active</v-btn>
           <v-btn @click="filter = 'completed'" text>completed</v-btn>
